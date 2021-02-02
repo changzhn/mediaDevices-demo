@@ -1,0 +1,18 @@
+.logger {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40%;
+    min-height: 200px;
+    max-height: 80vh;
+    overflow-y: scroll;
+    padding: 14px;
+    line-height: 1.5;
+    color: #4fbf40;
+    border-radius: 6px;
+    background-color: #272727;
+    word-break: break-all;
+}
+.logger .error {
+    color: #DD4A68;
+}

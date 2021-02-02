@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>enumerateDevices</title>
+</head>
+<body>
+    <script>
+        navigator.mediaDevices.enumerateDevices().then(res => {
+            // 如果输出的是空值，先调用下
+            // navigator.mediaDevices.getUserMedia({ video: true, audio: true});
+            console.table(res);
+        });
+    </script>
+</body>
+</html>

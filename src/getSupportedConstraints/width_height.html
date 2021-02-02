@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>width & height</title>
+</head>
+<body>
+    <button id="init">初始化播放器</button>
+    <button class="btn" data-value="unconstrained">无约束</button>
+    <button class="btn" data-value="exact">精确值</button>
+    <button class="btn" data-value="super">超范围的精确值</button>
+    <button class="btn" data-value="range">范围</button>
+    <button class="capability">获取浏览器能力</button>
+    <br />
+    <video id="localvideo" autoplay />
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../utils/logger.js"></script>
+    <script>
+        const localvideo = document.querySelector('#localvideo');
+        let stream;
+        let inited = false;
+
+        function logConstraints(c) {
+            logger.log(`设置的约束： ${JSON.stringify(c)}`);
+            logger.log(`点击按钮可以切换模式`);
+        }
+
+        const videoConstraints = {
+            unconstrained: {},
+            exact: {
+                width: 320,
+                height: 240,
+            },
+            super: {
+                width: 3200,
+                height: 2400,
+            },
+            range: {
+                height: {
+                    min: 240,
+                    max: 720,
+                    ideal: 360,
+                }
+            }
+        };
+
+        async function init() {
+            stream = await navigator.mediaDevices.getUserMedia({
+                video: videoConstraints.unconstrained,
+            });
+
+            localvideo.srcObject = stream;
+
+            logConstraints(videoConstraints.unconstrained);
+
+            inited = true;
+        }
+
+        $('#init').on('click', init);
+
+        $('.btn').on('click', async function() {
+            if (!inited) {
+                await init();
+            }
+
+            const value = $(this).data('value');
+            const track = stream.getTracks()[0];
+            track.applyConstraints(videoConstraints[value]);
+            logConstraints(videoConstraints[value]);
+        });
+
+        $('.capability').on('click', function() {
+            if (!inited) {
+                logger.error('请先初始化播放器');
+            }
+            const track = stream.getTracks()[0];
+            logger.log('浏览器能力指可以设置的范围值或枚举值');
+            logger.log(`capabilities: ${JSON.stringify(track.getCapabilities())}`)
+        })
+
+    </script>
+</body>
+</html>

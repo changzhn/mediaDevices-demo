@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>aspectRatio</title>
+</head>
+<body>
+
+    <video id="localvideo" autoplay />
+    <script>
+        const localvideo = document.querySelector('#localvideo');
+
+        window.addEventListener('load', initMedia);
+
+        async function initMedia() {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    width: 640,
+                    aspectRatio: 2,
+                }
+            });
+
+            localvideo.srcObject = stream;
+        }
+    </script>
+</body>
+</html>

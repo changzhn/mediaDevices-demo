@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>getConstraints</title>
+</head>
+<body>
+    <script>
+
+        window.addEventListener('load', initMedia);
+
+        async function initMedia() {
+            // case 1
+            const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+            const track = stream.getTracks()[0];
+            console.log(track.getConstraints());
+
+            // case 2
+            // const stream = await navigator.mediaDevices.getUserMedia({ video: {
+            //     width: 640,
+            //     height: 320
+            // } });
+            // const track = stream.getTracks()[0];
+            // console.log(track.getConstraints());
+        }
+
+    </script>
+</body>
+</html>
